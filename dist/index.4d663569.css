@@ -1,9 +1,14 @@
 #container-login {
   height: 100%;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 0;
   display: flex;
+}
+
+#container-login img {
+  margin-bottom: 20px;
 }
 
 #p-login {
@@ -70,6 +75,11 @@
   color: #a6f750;
   border: 1px solid #a6f750;
   border-radius: 4px;
+}
+
+#p-login a {
+  color: #a6f750;
+  text-decoration: none;
 }
 
 #p-not-found p {
@@ -171,6 +181,30 @@
 #p-contact-details #go-back:hover {
   color: #a6f750;
   border: 1px solid #a6f750;
+  border-radius: 4px;
+}
+
+#p-contact-details-footer {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+#p-contact-details-footer button {
+  width: 150px;
+  height: 40px;
+  cursor: pointer;
+  color: #e1e1e1;
+  background-color: #181c23;
+  border: 1px solid #e1e1e1;
+  border-radius: 4px;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
+#p-contact-details-footer button:hover {
+  color: red;
+  border: 1px solid red;
   border-radius: 4px;
 }
 

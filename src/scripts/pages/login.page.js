@@ -26,6 +26,11 @@ const events = () => {
 
 export const Login = () => {
     root.append(loginsection)
+
+    loginsection.innerHTML = `
+    <img src="https://ada-site-frontend.s3.sa-east-1.amazonaws.com/home/header-logo.svg" class="sc-86ca6303-7 fFgJEq">
+    `
+
     loginsection.append(login)
 
     login.innerHTML = `

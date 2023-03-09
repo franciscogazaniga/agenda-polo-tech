@@ -3,8 +3,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   height: 100%;
   padding: 0;
+}
+
+#container-login img {
+  margin-bottom: 20px;
 }
 
 #p-login {
@@ -75,4 +80,9 @@ button {
   color: #a6f750;
   border-radius: 4px;
   border: 1px solid #a6f750;
+}
+
+#p-login a {
+  text-decoration: none;
+  color: #a6f750;
 }

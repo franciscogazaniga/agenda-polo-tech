@@ -1,14 +1,50 @@
 import { Header } from "../components/header.component.js"
+import { deletarContato } from "../services/contact.service.js"
 
 const root = document.getElementById('root')
 const contactsDetails = document.createElement('section')
 contactsDetails.setAttribute("id", "p-contact-details")
+
+const contactsFooter = document.createElement('section')
+contactsFooter.setAttribute("id", "p-contact-details-footer")
 
 const events = () => {
     const goBack = contactsDetails.querySelector('#go-back')
     goBack.addEventListener('click', () => {
         history.replaceState(null, "", "/#contacts")// modifica a rota sem reload
         window.location.reload() // força o reload da página com a nova hash
+    })
+
+    const deleteContact = contactsFooter.querySelector('#delete-button')
+    const contato = window.history.state
+
+    deleteContact.addEventListener('click', () => {
+
+        const contactToDelete = {
+            idContato: undefined,
+        }
+
+        contactToDelete["idContato"] = contato.id
+        console.log(contactToDelete)
+        deletarContato(contactToDelete)
+            .then((response) => {
+                const retorno = deleteContact.querySelector("#retorno")
+
+                if(response.status === 400) {
+                    retorno.innerText = response.mensagem
+                }
+                
+                if(response.status === 200) {
+                    window.location.href = "/#contacts"
+                }
+            })
+            .catch((error) => {
+                console.log("deu ruim")
+                console.error(error)
+            })
+
+        //history.replaceState(null, "", "/#contacts")// modifica a rota sem reload
+        //window.location.reload() // força o reload da página com a nova hash
     })
 }
 
@@ -34,7 +70,7 @@ export const ContactDetails = () => {
         <h3>Endereço</h3>
         <p><b>CEP: </b>${contato.endereco.cep}</p>
         <p><b>Logradouro: </b>${contato.endereco.logradouro}</p>
-        <p><b>Cidade: </b>${contato.endereco.cidade}</p>
+        <p><b>Cidade: </b>${contato.endereco.cep}</p>
         <p><b>Estado: </b>${contato.endereco.estado}</p>
         <p><b>País: </b>${contato.endereco.pais}</p>  
         
@@ -49,6 +85,14 @@ export const ContactDetails = () => {
             <p>${telefone.numero}</p>        
         `
     })
+
+    contactsFooter.innerHTML = `
+        <button id="delete-button" type="button">Deletar contato</button>
+
+        <label id="retorno"></label>
+    `
+
+    contactsDetails.append(contactsFooter)
 
     events()
     return contactsDetails

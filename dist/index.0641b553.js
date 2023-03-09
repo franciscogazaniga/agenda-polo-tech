@@ -614,9 +614,12 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "ContactDetails", ()=>ContactDetails);
 var _headerComponentJs = require("../components/header.component.js");
+var _contactServiceJs = require("../services/contact.service.js");
 const root = document.getElementById("root");
 const contactsDetails = document.createElement("section");
 contactsDetails.setAttribute("id", "p-contact-details");
+const contactsFooter = document.createElement("section");
+contactsFooter.setAttribute("id", "p-contact-details-footer");
 const events = ()=>{
     const goBack = contactsDetails.querySelector("#go-back");
     goBack.addEventListener("click", ()=>{
@@ -624,6 +627,25 @@ const events = ()=>{
         ;
         window.location.reload() // força o reload da página com a nova hash
         ;
+    });
+    const deleteContact = contactsFooter.querySelector("#delete-button");
+    const contato = window.history.state;
+    deleteContact.addEventListener("click", ()=>{
+        const contactToDelete = {
+            idContato: undefined
+        };
+        contactToDelete["idContato"] = contato.id;
+        console.log(contactToDelete);
+        (0, _contactServiceJs.deletarContato)(contactToDelete).then((response)=>{
+            const retorno = deleteContact.querySelector("#retorno");
+            if (response.status === 400) retorno.innerText = response.mensagem;
+            if (response.status === 200) window.location.href = "/#contacts";
+        }).catch((error)=>{
+            console.log("deu ruim");
+            console.error(error);
+        });
+    //history.replaceState(null, "", "/#contacts")// modifica a rota sem reload
+    //window.location.reload() // força o reload da página com a nova hash
     });
 };
 const ContactDetails = ()=>{
@@ -646,7 +668,7 @@ const ContactDetails = ()=>{
         <h3>Endereço</h3>
         <p><b>CEP: </b>${contato.endereco.cep}</p>
         <p><b>Logradouro: </b>${contato.endereco.logradouro}</p>
-        <p><b>Cidade: </b>${contato.endereco.cidade}</p>
+        <p><b>Cidade: </b>${contato.endereco.cep}</p>
         <p><b>Estado: </b>${contato.endereco.estado}</p>
         <p><b>País: </b>${contato.endereco.pais}</p>  
         
@@ -660,11 +682,17 @@ const ContactDetails = ()=>{
             <p>${telefone.numero}</p>        
         `;
     });
+    contactsFooter.innerHTML = `
+        <button id="delete-button" type="button">Deletar contato</button>
+
+        <label id="retorno"></label>
+    `;
+    contactsDetails.append(contactsFooter);
     events();
     return contactsDetails;
 };
 
-},{"../components/header.component.js":"5Zcf5","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"5Zcf5":[function(require,module,exports) {
+},{"../components/header.component.js":"5Zcf5","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","../services/contact.service.js":"bHr4j"}],"5Zcf5":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Header", ()=>Header);
@@ -721,7 +749,53 @@ exports.export = function(dest, destName, get) {
     });
 };
 
-},{}],"ab8dj":[function(require,module,exports) {
+},{}],"bHr4j":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "criarContato", ()=>criarContato);
+parcelHelpers.export(exports, "buscarContatos", ()=>buscarContatos);
+parcelHelpers.export(exports, "deletarContato", ()=>deletarContato);
+var _appSettings = require("../../../appSettings");
+var _appSettingsDefault = parcelHelpers.interopDefault(_appSettings);
+const url = `${(0, _appSettingsDefault.default).baseUrl}/contact`;
+const headers = new Headers();
+headers.append("Content-Type", "application/json");
+headers.append("Authorization", sessionStorage.getItem("@token"));
+const criarContato = async (data)=>{
+    const options = {
+        headers,
+        body: JSON.stringify(data),
+        method: "POST"
+    };
+    const response = await fetch(url, options);
+    return await response.json();
+};
+const buscarContatos = async ()=>{
+    const options = {
+        headers,
+        method: "GET"
+    };
+    const response = await fetch(url, options);
+    return await response.json();
+};
+const deletarContato = async (contactId)=>{
+    const options = {
+        headers,
+        body: JSON.stringify(contactId),
+        method: "DELETE"
+    };
+    const response = await fetch(url, options);
+    return await response.json();
+};
+
+},{"../../../appSettings":"99wdA","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"99wdA":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+exports.default = {
+    baseUrl: "http://localhost:5001/v1"
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"ab8dj":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Contacts", ()=>Contacts);
@@ -742,8 +816,8 @@ const events = ()=>{
     (0, _contactServiceJs.buscarContatos)().then((contatos)=>{
         const cards = contacts.querySelector("#cards");
         const contactNull = contacts.querySelector("#contactNull");
-        const arrayContatos = contatos.data;
-        if (arrayContatos === 0) contactNull.className = "showContactNull";
+        const objectContatos = contatos.data;
+        if (Object.keys(objectContatos).length === 0) contactNull.className = "showContactNull";
         else {
             contactNull.className = "hideContactNull";
             contatos.data.forEach((item)=>{
@@ -764,7 +838,7 @@ const Contacts = ()=>{
 
         <div id="cards">
             <div id="contactNull">
-                Voce não possui nenhum contato cadastrado. <a href="/#new-contact">Cadastrar novo contato</a>
+                Voce não possui nenhum contato cadastrado.
             </div>
 
             
@@ -798,42 +872,6 @@ const CardContact = (contato)=>{
     return cardContact;
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"bHr4j":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "criarContato", ()=>criarContato);
-parcelHelpers.export(exports, "buscarContatos", ()=>buscarContatos);
-var _appSettings = require("../../../appSettings");
-var _appSettingsDefault = parcelHelpers.interopDefault(_appSettings);
-const url = `${(0, _appSettingsDefault.default).baseUrl}/contact`;
-const headers = new Headers();
-headers.append("Content-Type", "application/json");
-headers.append("Authorization", sessionStorage.getItem("@token"));
-const criarContato = async (data)=>{
-    const options = {
-        headers,
-        body: JSON.stringify(data),
-        method: "POST"
-    };
-    const response = await fetch(url, options);
-    return await response.json();
-};
-const buscarContatos = async ()=>{
-    const options = {
-        headers,
-        method: "GET"
-    };
-    const response = await fetch(url, options);
-    return await response.json();
-};
-
-},{"../../../appSettings":"99wdA","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"99wdA":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-exports.default = {
-    baseUrl: "http://localhost:5001/v1"
-};
-
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"2wcBy":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
@@ -860,6 +898,9 @@ const events = ()=>{
 };
 const Login = ()=>{
     root.append(loginsection);
+    loginsection.innerHTML = `
+    <img src="https://ada-site-frontend.s3.sa-east-1.amazonaws.com/home/header-logo.svg" class="sc-86ca6303-7 fFgJEq">
+    `;
     loginsection.append(login);
     login.innerHTML = `
         <label for="email">Usuário</label>
@@ -1025,10 +1066,74 @@ const events = ()=>{
         window.location.reload() // força o reload da página com a nova hash
         ;
     });
+    // const objetoTeste = {
+    //     "nome":"Caio","apelido":"Kaka","email":"kaka@gmail.com","notas":"Colega","cep":"1111111","logradouro":"Rua Outra","cidade":"Qualquer","estado":"OU","pais":"Brasil","tipo":"Casa","numero":"12312321",
+    // }
+    // const objetoTeste2 = {
+    //     "nome":"Caio","apelido":"Kaka","email":"kaka@gmail.com","notas":"Colega","cep":"1111111","logradouro":"Rua Outra","cidade":"Qualquer","estado":"OU","pais":"Brasil","tipo":"Casa","numero":"12312321",
+    // }
+    // let { nome, apelido, email, notas, cep, logradouro, cidade, estado, pais, ...objetoTelefone } = objetoTeste;
+    // let arrayTelefone = []
+    // arrayTelefone.push(objetoTelefone)
+    // //let { nome, apelido2, email2, notas2, cep2, tipo, numero,  ...objetoEndereco } = objetoTeste;
+    // let objetoEndereco = Object.assign({}, objetoTeste, {
+    //     nome: undefined,
+    //     apelido: undefined,
+    //     email: undefined,
+    //     notas: undefined,
+    //     tipo: undefined,
+    //     numero: undefined,
+    //   });
+    // let keysToDelete = ["nome", "apelido", "email", "notas", "tipo", "numero"];
+    // for (let i = 0; i < keysToDelete.length; i++) {
+    //     delete objetoEndereco[keysToDelete[i]];
+    // }
+    // console.log(objetoTeste2)
+    // //const arrayTelefone = [{"tipo":"Casa","numero":"12312321"}, {"tipo":"Trabalho","numero":"2222"}]
+    // //const objetoTeste2 = {"logradouro":"Rua Outra","cidade":"Qualquer","estado":"OU","pais":"Brasil","tipo":"Casa","numero":"12312321"}
+    // objetoTeste["telefone"] = arrayTelefone
+    // objetoTeste["endereco"] = objetoEndereco
+    // let keysToDelete2 = ["logradouro", "cidade", "estado", "cep", "pais", "tipo", "numero"];
+    // for (let i = 0; i < keysToDelete2.length; i++) {
+    //     delete objetoTeste[keysToDelete2[i]];
+    // }
+    // console.log(objetoTeste)
     newcontactform.addEventListener("submit", (e)=>{
         e.preventDefault();
-        const fd = new FormData(newcontactform);
-        const data = Object.fromEntries(fd);
+        const fdContactData = new FormData(newcontactform);
+        const data = Object.fromEntries(fdContactData);
+        let { nome , apelido , email , notas , cep , logradouro , cidade , estado , pais , ...objetoTelefone } = data;
+        let arrayTelefone = [];
+        arrayTelefone.push(objetoTelefone);
+        let objetoEndereco = Object.assign({}, data, {
+            nome: undefined,
+            apelido: undefined,
+            email: undefined,
+            notas: undefined,
+            tipo: undefined,
+            numero: undefined
+        });
+        let keysToDelete = [
+            "nome",
+            "apelido",
+            "email",
+            "notas",
+            "tipo",
+            "numero"
+        ];
+        for(let i = 0; i < keysToDelete.length; i++)delete objetoEndereco[keysToDelete[i]];
+        data["telefones"] = arrayTelefone;
+        data["endereco"] = objetoEndereco;
+        let keysToDelete2 = [
+            "logradouro",
+            "cidade",
+            "estado",
+            "cep",
+            "pais",
+            "tipo",
+            "numero"
+        ];
+        for(let i = 0; i < keysToDelete2.length; i++)delete data[keysToDelete2[i]];
         (0, _contactService.criarContato)(data).then((response)=>{
             const retorno = newcontactform.querySelector("#retorno");
             if (response.status === 409) retorno.innerText = response.mensagem;

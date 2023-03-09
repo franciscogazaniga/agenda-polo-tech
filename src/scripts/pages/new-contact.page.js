@@ -13,11 +13,81 @@ const events = () => {
         window.location.reload() // força o reload da página com a nova hash
     })
 
+    // const objetoTeste = {
+    //     "nome":"Caio","apelido":"Kaka","email":"kaka@gmail.com","notas":"Colega","cep":"1111111","logradouro":"Rua Outra","cidade":"Qualquer","estado":"OU","pais":"Brasil","tipo":"Casa","numero":"12312321",
+    // }
+    // const objetoTeste2 = {
+    //     "nome":"Caio","apelido":"Kaka","email":"kaka@gmail.com","notas":"Colega","cep":"1111111","logradouro":"Rua Outra","cidade":"Qualquer","estado":"OU","pais":"Brasil","tipo":"Casa","numero":"12312321",
+    // }
+
+    // let { nome, apelido, email, notas, cep, logradouro, cidade, estado, pais, ...objetoTelefone } = objetoTeste;
+    // let arrayTelefone = []
+    // arrayTelefone.push(objetoTelefone)
+    // //let { nome, apelido2, email2, notas2, cep2, tipo, numero,  ...objetoEndereco } = objetoTeste;
+
+    // let objetoEndereco = Object.assign({}, objetoTeste, {
+    //     nome: undefined,
+    //     apelido: undefined,
+    //     email: undefined,
+    //     notas: undefined,
+    //     tipo: undefined,
+    //     numero: undefined,
+    //   });
+     
+    // let keysToDelete = ["nome", "apelido", "email", "notas", "tipo", "numero"];
+
+    // for (let i = 0; i < keysToDelete.length; i++) {
+    //     delete objetoEndereco[keysToDelete[i]];
+    // }
+
+    // console.log(objetoTeste2)
+
+    // //const arrayTelefone = [{"tipo":"Casa","numero":"12312321"}, {"tipo":"Trabalho","numero":"2222"}]
+    // //const objetoTeste2 = {"logradouro":"Rua Outra","cidade":"Qualquer","estado":"OU","pais":"Brasil","tipo":"Casa","numero":"12312321"}
+
+    // objetoTeste["telefone"] = arrayTelefone
+    // objetoTeste["endereco"] = objetoEndereco
+
+    // let keysToDelete2 = ["logradouro", "cidade", "estado", "cep", "pais", "tipo", "numero"];
+
+    // for (let i = 0; i < keysToDelete2.length; i++) {
+    //     delete objetoTeste[keysToDelete2[i]];
+    // }
+    // console.log(objetoTeste)
+
     newcontactform.addEventListener('submit', (e) => {
         e.preventDefault()
 
-        const fd = new FormData(newcontactform)
-        const data = Object.fromEntries(fd)
+        const fdContactData = new FormData(newcontactform)
+        const data = Object.fromEntries(fdContactData)
+
+        let { nome, apelido, email, notas, cep, logradouro, cidade, estado, pais, ...objetoTelefone } = data;
+        let arrayTelefone = []
+        arrayTelefone.push(objetoTelefone)
+
+        let objetoEndereco = Object.assign({}, data, {
+            nome: undefined,
+            apelido: undefined,
+            email: undefined,
+            notas: undefined,
+            tipo: undefined,
+            numero: undefined,
+          });
+         
+        let keysToDelete = ["nome", "apelido", "email", "notas", "tipo", "numero"];
+    
+        for (let i = 0; i < keysToDelete.length; i++) {
+            delete objetoEndereco[keysToDelete[i]];
+        }
+
+        data["telefones"] = arrayTelefone
+        data["endereco"] = objetoEndereco
+    
+        let keysToDelete2 = ["logradouro", "cidade", "estado", "cep", "pais", "tipo", "numero"];
+    
+        for (let i = 0; i < keysToDelete2.length; i++) {
+            delete data[keysToDelete2[i]];
+        }
 
         criarContato(data)
             .then((response) => {

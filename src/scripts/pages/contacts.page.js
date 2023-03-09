@@ -18,9 +18,9 @@ const events = () => {
             const cards = contacts.querySelector('#cards')
             const contactNull = contacts.querySelector('#contactNull')
 
-            const arrayContatos = contatos.data
+            const objectContatos = contatos.data
 
-            if(arrayContatos === 0) {
+            if(Object.keys(objectContatos).length === 0) {
                 contactNull.className = 'showContactNull'
             } else {
                 contactNull.className = 'hideContactNull'
@@ -45,7 +45,7 @@ export const Contacts = () => {
 
         <div id="cards">
             <div id="contactNull">
-                Voce não possui nenhum contato cadastrado. <a href="/#new-contact">Cadastrar novo contato</a>
+                Voce não possui nenhum contato cadastrado.
             </div>
 
             

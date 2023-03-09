@@ -32,3 +32,14 @@ export const buscarContatos = async () => {
     const response = await fetch(url, options)
     return await response.json()
 }
+
+export const deletarContato = async (contactId) => {
+    const options = {
+        headers,
+        body: JSON.stringify(contactId),
+        method: "DELETE",
+    }
+
+    const response = await fetch(url, options)
+    return await response.json()
+}
