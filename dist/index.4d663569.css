@@ -1,0 +1,281 @@
+#container-login {
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  display: flex;
+}
+
+#p-login {
+  width: 100%;
+  max-width: 320px;
+  flex-direction: column;
+  margin: 0 auto;
+  display: flex;
+}
+
+#p-login input {
+  max-width: 100%;
+  color: #e1e1e1;
+  border: 1px solid #383c44;
+  border-color: #383c44 #0000;
+  border-image: initial;
+  background-color: #282c33;
+  border-radius: 4px;
+  outline: none;
+  flex: 1;
+  padding: .625rem 1.25rem;
+  font-size: 1rem;
+  position: relative;
+}
+
+#p-login fildset {
+  border: 0;
+  margin: 10px 0 20px;
+  padding: 0;
+}
+
+#p-login fildset label {
+  margin-right: 10px;
+}
+
+#p-login input[type="radio"] {
+  margin-top: 0;
+  margin-left: 0;
+  margin-right: 5px;
+}
+
+#p-login input:not(input[type="radio"]), button {
+  width: 100%;
+  box-sizing: border-box;
+  margin: 10px 0;
+  display: block;
+}
+
+#p-login h1 {
+  color: green;
+}
+
+#p-login button {
+  cursor: pointer;
+  color: #e1e1e1;
+  background-color: #181c23;
+  border: 1px solid #e1e1e1;
+  border-radius: 4px;
+  padding: 16px 32px;
+  text-decoration: none;
+}
+
+#p-login button:hover {
+  color: #a6f750;
+  border: 1px solid #a6f750;
+  border-radius: 4px;
+}
+
+#p-not-found p {
+  color: #8a2be2;
+  font-size: 1rem;
+  font-style: italic;
+}
+
+#p-signup {
+  max-width: 320px;
+  flex-direction: column;
+  margin: 0 auto;
+  display: flex;
+}
+
+#p-signup fieldset {
+  border: 0;
+  padding: 0;
+}
+
+#p-signup input[type="radio"] {
+  margin-left: 0;
+  margin-right: 10px;
+}
+
+#p-signup input:not(input[type="radio"]), button {
+  width: 100%;
+  box-sizing: border-box;
+  margin: 10px 0;
+  display: block;
+}
+
+#p-signup h1 {
+  color: green;
+}
+
+#p-contacts {
+  margin: 10px;
+}
+
+.showContactNull {
+  display: block;
+}
+
+.hideContactNull {
+  display: none;
+}
+
+#title {
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+}
+
+#p-contacts #btn-new-contact {
+  width: 150px;
+  height: 40px;
+  cursor: pointer;
+  color: #e1e1e1;
+  background-color: #181c23;
+  border: 1px solid #e1e1e1;
+  border-radius: 4px;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
+#p-contacts #btn-new-contact:hover {
+  color: #a6f750;
+  border: 1px solid #a6f750;
+  border-radius: 4px;
+}
+
+#p-contact-details {
+  margin: 10px;
+}
+
+#p-contact-details a {
+  display: block;
+}
+
+#title {
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+}
+
+#p-contact-details #go-back {
+  width: 150px;
+  height: 40px;
+  cursor: pointer;
+  color: #e1e1e1;
+  background-color: #181c23;
+  border: 1px solid #e1e1e1;
+  border-radius: 4px;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
+#p-contact-details #go-back:hover {
+  color: #a6f750;
+  border: 1px solid #a6f750;
+  border-radius: 4px;
+}
+
+#c-header {
+  color: #fff;
+  text-transform: uppercase;
+  justify-content: space-around;
+  align-items: center;
+  padding: 20px 0;
+  display: flex;
+}
+
+#c-header #btn-sair {
+  max-width: 100px;
+  cursor: pointer;
+  color: #e1e1e1;
+  background-color: #181c23;
+  border: 1px solid #e1e1e1;
+  border-radius: 4px;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
+#c-header #btn-sair:hover {
+  color: #a6f750;
+  border: 1px solid #a6f750;
+  border-radius: 4px;
+}
+
+#c-card-contact {
+  color: #fff;
+  background-color: #282c33;
+  align-items: center;
+  margin: 10px 0;
+  display: flex;
+}
+
+#c-card-contact > * {
+  flex: 1;
+  padding: 0 10px;
+}
+
+#c-card-contact > a {
+  height: 60px;
+  color: #e1e1e1;
+  background-color: #181c23;
+  border: 1px solid #e1e1e1;
+  flex: 0;
+  align-items: center;
+  text-decoration: none;
+  display: flex;
+}
+
+#c-card-contact > a:hover {
+  cursor: pointer;
+  color: #a6f750;
+  border: 1px solid #a6f750;
+}
+
+#title {
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+}
+
+#title #go-back {
+  width: 150px;
+  height: 40px;
+  cursor: pointer;
+  color: #e1e1e1;
+  background-color: #181c23;
+  border: 1px solid #e1e1e1;
+  border-radius: 4px;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
+#title #go-back:hover {
+  color: #a6f750;
+  border: 1px solid #a6f750;
+  border-radius: 4px;
+}
+
+#p-new-contact {
+  flex-direction: column;
+  display: flex;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  color: #e1e1e1;
+  background-color: #181c23;
+  margin: 0;
+  font-family: Lato, sans-serif;
+}
+
+#root {
+  height: 100%;
+}
+
+section {
+  padding: 50px;
+}
+
+/*# sourceMappingURL=index.4d663569.css.map */

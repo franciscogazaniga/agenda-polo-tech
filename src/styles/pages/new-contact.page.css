@@ -1,0 +1,30 @@
+#title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#title #go-back {
+  width: 150px;
+  height: 40px;
+  background-color: #181c23;
+  border-radius: 4px;
+  border: 1px solid #e1e1e1;
+  border-style: solid;
+  border-width: 1px;
+  padding: 8px 16px;
+  cursor: pointer;
+  text-decoration: none;
+  color: #e1e1e1;;
+}
+
+#title #go-back:hover {
+  color: #a6f750;
+  border-radius: 4px;
+  border: 1px solid #a6f750;
+}
+
+#p-new-contact {
+  display: flex;
+  flex-direction: column;
+}
