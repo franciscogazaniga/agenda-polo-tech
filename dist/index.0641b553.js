@@ -615,7 +615,7 @@ parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "ContactDetails", ()=>ContactDetails);
 var _headerComponentJs = require("../components/header.component.js");
 const root = document.getElementById("root");
-const contactsDetails = document.createElement("div");
+const contactsDetails = document.createElement("section");
 contactsDetails.setAttribute("id", "p-contact-details");
 const events = ()=>{
     const goBack = contactsDetails.querySelector("#go-back");

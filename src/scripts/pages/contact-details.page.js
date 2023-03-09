@@ -1,7 +1,7 @@
 import { Header } from "../components/header.component.js"
 
 const root = document.getElementById('root')
-const contactsDetails = document.createElement('div')
+const contactsDetails = document.createElement('section')
 contactsDetails.setAttribute("id", "p-contact-details")
 
 const events = () => {
