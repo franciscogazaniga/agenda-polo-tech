@@ -12,6 +12,15 @@
   justify-content: space-between;
 }
 
+#p-contact-details #buttons {
+  display: flex;
+  flex-direction: row;
+}
+
+#buttons button {
+  margin: 0 10px;
+}
+
 #p-contact-details #go-back {
   width: 150px;
   height: 40px;
@@ -38,7 +47,7 @@
   justify-content: center;
 }
 
-#p-contact-details-footer button {
+#p-contact-details button {
   width: 150px;
   height: 40px;
   background-color: #181c23;
@@ -52,7 +61,7 @@
   color: #e1e1e1;
 }
 
-#p-contact-details-footer button:hover {
+#p-contact-details button:hover {
   color: red;
   border-radius: 4px;
   border: 1px solid red;

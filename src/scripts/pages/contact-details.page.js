@@ -15,20 +15,18 @@ const events = () => {
         window.location.reload() // força o reload da página com a nova hash
     })
 
-    const deleteContact = contactsFooter.querySelector('#delete-button')
+    const deleteContact = contactsDetails.querySelector('#delete-button')
     const contato = window.history.state
 
     deleteContact.addEventListener('click', () => {
-
         const contactToDelete = {
             idContato: undefined,
         }
-
         contactToDelete["idContato"] = contato.id
-        console.log(contactToDelete)
+   
         deletarContato(contactToDelete)
             .then((response) => {
-                const retorno = deleteContact.querySelector("#retorno")
+                const retorno = contactsFooter.querySelector("#retorno")
 
                 if(response.status === 400) {
                     retorno.innerText = response.mensagem
@@ -57,9 +55,14 @@ export const ContactDetails = () => {
     contactsDetails.innerHTML = `
         <div id="title">
           <h1>${contato.nome}</h1>
-          <button id="go-back" type="button">Voltar</button>
+
+          <div id="buttons">
+            <button id="delete-button" type="button">Deletar contato</button>
+            <button id="go-back" type="button">Voltar</button>
+          </div>
         </div>
 
+        <div>
         <br>
         <p><b>Nome: </b>${contato.nome}</p>
         <p><b>Apelido: </b>${contato.apelido}</p>
@@ -73,7 +76,7 @@ export const ContactDetails = () => {
         <p><b>Cidade: </b>${contato.endereco.cep}</p>
         <p><b>Estado: </b>${contato.endereco.estado}</p>
         <p><b>País: </b>${contato.endereco.pais}</p>  
-        
+        </div>
         <br>
         <h3>Telefone</h3>
         `
@@ -87,8 +90,6 @@ export const ContactDetails = () => {
     })
 
     contactsFooter.innerHTML = `
-        <button id="delete-button" type="button">Deletar contato</button>
-
         <label id="retorno"></label>
     `
 

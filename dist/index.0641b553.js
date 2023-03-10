@@ -628,16 +628,15 @@ const events = ()=>{
         window.location.reload() // força o reload da página com a nova hash
         ;
     });
-    const deleteContact = contactsFooter.querySelector("#delete-button");
+    const deleteContact = contactsDetails.querySelector("#delete-button");
     const contato = window.history.state;
     deleteContact.addEventListener("click", ()=>{
         const contactToDelete = {
             idContato: undefined
         };
         contactToDelete["idContato"] = contato.id;
-        console.log(contactToDelete);
         (0, _contactServiceJs.deletarContato)(contactToDelete).then((response)=>{
-            const retorno = deleteContact.querySelector("#retorno");
+            const retorno = contactsFooter.querySelector("#retorno");
             if (response.status === 400) retorno.innerText = response.mensagem;
             if (response.status === 200) window.location.href = "/#contacts";
         }).catch((error)=>{
@@ -655,9 +654,14 @@ const ContactDetails = ()=>{
     contactsDetails.innerHTML = `
         <div id="title">
           <h1>${contato.nome}</h1>
-          <button id="go-back" type="button">Voltar</button>
+
+          <div id="buttons">
+            <button id="delete-button" type="button">Deletar contato</button>
+            <button id="go-back" type="button">Voltar</button>
+          </div>
         </div>
 
+        <div>
         <br>
         <p><b>Nome: </b>${contato.nome}</p>
         <p><b>Apelido: </b>${contato.apelido}</p>
@@ -671,7 +675,7 @@ const ContactDetails = ()=>{
         <p><b>Cidade: </b>${contato.endereco.cep}</p>
         <p><b>Estado: </b>${contato.endereco.estado}</p>
         <p><b>País: </b>${contato.endereco.pais}</p>  
-        
+        </div>
         <br>
         <h3>Telefone</h3>
         `;
@@ -683,8 +687,6 @@ const ContactDetails = ()=>{
         `;
     });
     contactsFooter.innerHTML = `
-        <button id="delete-button" type="button">Deletar contato</button>
-
         <label id="retorno"></label>
     `;
     contactsDetails.append(contactsFooter);
@@ -838,10 +840,9 @@ const Contacts = ()=>{
 
         <div id="cards">
             <div id="contactNull">
-                Voce não possui nenhum contato cadastrado.
+                <i class="far fa-address-card" style="font-size: 56px"></i>
+                Voce não possui nenhum contato cadastrado. 
             </div>
-
-            
         </div>
     `;
     events();
@@ -989,6 +990,8 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Signup", ()=>Signup);
 var _userService = require("../services/user.service");
+const signupsection = document.createElement("section");
+signupsection.setAttribute("id", "container-signup");
 const signup = document.createElement("form");
 signup.setAttribute("id", "p-signup");
 const events = ()=>{
@@ -1006,6 +1009,11 @@ const events = ()=>{
     });
 };
 const Signup = ()=>{
+    root.append(signupsection);
+    signupsection.innerHTML = `
+    <img src="https://ada-site-frontend.s3.sa-east-1.amazonaws.com/home/header-logo.svg" class="sc-86ca6303-7 fFgJEq">
+    `;
+    signupsection.append(signup);
     signup.innerHTML = `
         <h3>Novo cadastro</h3>
         <label for="nome">Nome</label>
@@ -1025,7 +1033,7 @@ const Signup = ()=>{
         <label id="retorno"></label>
     `;
     events();
-    return signup;
+    return signupsection;
 };
 
 },{"../services/user.service":"cFUX9","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"cFUX9":[function(require,module,exports) {

@@ -45,10 +45,9 @@ export const Contacts = () => {
 
         <div id="cards">
             <div id="contactNull">
-                Voce não possui nenhum contato cadastrado.
+                <i class="far fa-address-card" style="font-size: 56px"></i>
+                Voce não possui nenhum contato cadastrado. 
             </div>
-
-            
         </div>
     `
 

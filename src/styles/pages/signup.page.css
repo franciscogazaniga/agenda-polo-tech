@@ -1,29 +1,61 @@
 /* Pagina de signup */
+#container-signup {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
+  padding: 0;
+}
+
+#container-signup img {
+  margin-bottom: 20px;
+}
+
 #p-signup {
+  width: 100%;
   display: flex;
   flex-direction: column;
   max-width: 320px;
   margin: 0 auto;
 }
 
-#p-signup fieldset {
-  border: 0;
-  padding: 0;
-}
-
-#p-signup input[type="radio"] {
-  margin-left: 0;
-  margin-right: 10px;
-}
-
-#p-signup input:not(input[type="radio"]),
-button {
-  display: block;
-  width: 100%;
-  box-sizing: border-box;
+#p-signup input {
+  max-width: 100%;
+  font-size: 1rem;
+  flex: 1 1 0%;
+  color: #e1e1e1;
+  position: relative;
+  outline: none;
+  padding: 0.625rem 1.25rem;
+  border-radius: 4px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgb(56, 60, 68) transparent;
+  background-color: #282c33;
+  border-image: initial;
   margin: 10px 0;
 }
 
-#p-signup h1 {
-  color: green;
+#p-signup button {
+  background-color: #181c23;
+  border-radius: 4px;
+  border: 1px solid #e1e1e1;
+  border-style: solid;
+  border-width: 1px;
+  padding: 16px 32px;
+  cursor: pointer;
+  text-decoration: none;
+  color: #e1e1e1;;
+}
+
+#p-signup button:hover {
+  color: #a6f750;
+  border-radius: 4px;
+  border: 1px solid #a6f750;
+}
+
+#p-signup a {
+  text-decoration: none;
+  color: #a6f750;
 }

@@ -1,5 +1,8 @@
 import { criarUsuario } from "../services/user.service"
 
+const signupsection = document.createElement('section')
+signupsection.setAttribute("id", "container-signup")
+
 const signup = document.createElement('form')
 signup.setAttribute("id", "p-signup")
 
@@ -29,6 +32,13 @@ const events = () => {
 }
 
 export const Signup = () => {
+    root.append(signupsection)
+
+    signupsection.innerHTML = `
+    <img src="https://ada-site-frontend.s3.sa-east-1.amazonaws.com/home/header-logo.svg" class="sc-86ca6303-7 fFgJEq">
+    `
+
+    signupsection.append(signup)
 
     signup.innerHTML = `
         <h3>Novo cadastro</h3>
@@ -50,5 +60,5 @@ export const Signup = () => {
     `
 
     events()
-    return signup
+    return signupsection
 }
